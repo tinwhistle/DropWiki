@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Brain Tree</title>
+    <style>
+
+
+  #myul { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+  #myul li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+  #myul li span { position: absolute; margin-left: -1.3em; }
+
+    #winky_top_menu
+    {
+        width: 100%;
+        border-style: solid;
+        border-width: 1px;
+        list-style-type: none;
+    }
+    #winky_top_menu li
+    {
+        display: inline;
+        border-right-style: solid;
+        border-right-width: 1px;
+    }
+
+    </style>
+</head>
+
+<body>
+
+
+    <ul id="winky_top_menu">
+        <li><a href="#">Index</a></li>
+        <li id="winky_editsave_menu_item">
+            <!-- todo: is this sloppy to invoke js from an achor tag? -->
+            <a id="winky_edit_button" href="javascript:Winky.edit_page()">Edit</a>
+            <a id="winky_save_button" href="javascript:Winky.save_page()">Save</a>
+            <!-- todo: need a cancel button. -->
+        </li>
+        <li>Delete</li>
+        <li>List All</li>
+    </ul>
+
+    <div id="winky_page_viewer">
+
+    </div>
+
+    <div id="winky_page_editor">
+        <textarea name="winky_page_editor_name" id="winky_page_editor_textbox">
+        </textarea>
+    </div>
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/underscore-min.js"></script>
+    <script src="/js/backbone-min.js"></script>
+    <script src="/js/marked.min.js"></script>
+
+    <script>
+
+var Winky =
+{
+    pages:
+    {
+        index: "hello there\n=========\nHere's some markup...\n\n[link to another page](winky:other-page1)\n\n[link to another page](winky:other-page2)",
+        'other-page1': "This is the other page 1!\n=================\nblah blah yadda yadda"
+    },
+
+    view_page: function()
+    {
+        var page_name = Backbone.history.getFragment();
+      page_name = !page_name || page_name == "" ? "index" : page_name; // todo:DRY
+
+      if (!Winky.pages[page_name])
+      {
+          Winky.edit_page();
+          return;
+      }
+
+      // todo:databind the visibility so this show hide code doesn't have to be repeated.
+      $('#winky_edit_button').show();
+      $('#winky_save_button').hide();
+      $('#winky_page_viewer').show();
+      $('#winky_page_editor').hide();
+
+      $('#winky_page_viewer').html(marked(Winky.pages[page_name]));
+      $('#winky_page_viewer a[href^="winky:"]').each(function()
+      {
+          var el = $(this);
+          el.attr('href', '#' + el.attr('href').substr('winky:'.length));
+      })
+    },
+
+    edit_page: function()
+    {
+        var page_name = Backbone.history.getFragment();
+        page_name = !page_name || page_name == "" ? "index" : page_name; // todo:DRY
+
+        $('#winky_edit_button').hide();
+        $('#winky_save_button').show();
+        $('#winky_page_viewer').hide();
+        $('#winky_page_editor').show();
+
+      if (Winky.pages[page_name])
+      {
+          $('#winky_page_editor_textbox').val(Winky.pages[page_name]);
+      }
+    },
+
+    save_page: function()
+    {
+        var page_name = Backbone.history.getFragment();
+        page_name = !page_name || page_name == "" ? "index" : page_name; // todo:DRY
+
+        Winky.pages[page_name] = $('#winky_page_editor_textbox').val();
+
+        Winky.view_page(page_name);
+    }
+};
+
+Winky.Workspace = Backbone.Router.extend({
+
+  routes: {
+      "": "view_page",
+      ":query": "view_page"
+  },
+
+  view_page: Winky.view_page
+});
+
+$(function()
+{
+    $('#winky_workspace_index').hide();
+    $('#winky_workspace_article').hide();
+    $('edit_page')
+
+    var workspace = new Winky.Workspace();
+    Backbone.history.start();
+
+
+});
+
+
+    </script>
+
+</body>
+
+</html>
