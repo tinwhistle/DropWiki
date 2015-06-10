@@ -53,13 +53,22 @@
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
             <a href="javascript:Winky.cancel_edit()">Cancel</a>
         </li>
-        <li>Delete</li>
-        <li>List All</li>
+        <li id="winky_delete_button"><a href="javascript:Winky.delete_page()">Delete</a></li>
+        <li id="winky_search_button"><a href="#search=">Search</a></li>
     </ul>
+    
     <div id="winky_page_viewer">
     </div>
+    
     <div id="winky_page_editor">
         <textarea name="winky_page_editor_name" id="winky_page_editor_textbox"></textarea>
+    </div>
+    
+    <div id="winky_search_page">
+        <textarea id="winky_search_text"></textarea>
+        <button id="winky_search_button">Find</button>
+        <ul id="winky_search_results">    
+        </ul>
     </div>
 
     <!-- todo: replace the CDNs with imbeds to make fast and independent. -->
@@ -81,6 +90,12 @@
                 var page_name = Backbone.history.getFragment();
                 page_name = !page_name || page_name == "" ? "index" : page_name; // todo:DRY
 
+                if (page_name.startsWith('search='))
+                {
+                    Winky.view_search_page();
+                    return;
+                }
+
                 if (!Winky.pages[page_name]) {
                     Winky.edit_page();
                     return;
@@ -92,6 +107,7 @@
                 $('#winky_cancel_button').hide();
                 $('#winky_page_viewer').show();
                 $('#winky_page_editor').hide();
+                $('#winky_search_page').hide();
 
                 $('#winky_page_viewer').html(marked(Winky.pages[page_name]));
                 $('#winky_page_viewer a[href^="winky:"]').each(function () {
@@ -109,6 +125,7 @@
                 $('#winky_cancel_button').show();
                 $('#winky_page_viewer').hide();
                 $('#winky_page_editor').show();
+                $('#winky_search_page').hide();
 
                 if (Winky.pages[page_name]) {
                     $('#winky_page_editor_textbox').val(Winky.pages[page_name]);
@@ -129,6 +146,57 @@
                 page_name = !page_name || page_name == "" ? "index" : page_name; // todo:DRY
                 
                 Winky.view_page(page_name);
+            },
+
+            delete_page: function() {
+                var page_name = Backbone.history.getFragment();
+                page_name = !page_name || page_name == "" ? "index" : page_name; // todo:DRY
+                
+                delete Winky.pages[page_name];
+                
+                Winky.view_page("");
+            },
+            
+            view_search_page: function()
+            {
+                $('#winky_edit_button').hide();
+                $('#winky_save_button').hide();
+                $('#winky_cancel_button').hide();
+                $('#winky_page_viewer').hide();
+                $('#winky_page_editor').hide();
+                $('#winky_search_page').show();
+                
+                var page_name = Backbone.history.getFragment();
+                var query = page_name.substr('search='.length);
+                
+                $('winky_search_text').val(query);
+                
+                var results = [];
+                for (var content_page_name in Winky.pages)
+                {
+                    if (query.length == 1 || Winky.pages[content_page_name].includes(query))
+                    {
+                        results.concat({
+                            pn: content_page_name,
+                            title: Winky.pages[content_page_name].substr(0, Winky.pages[content_page_name].indexOf('\n'))
+                            });
+                    }
+                }
+                
+                results = _.sortBy(results, function(result){ return result.title; });
+                var resultsHtml = [];
+                for (var i = 0; i < results.length; i++)
+                {
+                    resultsHtml.concat("<li><a href=\"#" + results[i].pn + "\">" + results[i].title + "</a></li>");
+                }
+                
+                $('#winky_search_results').html(resultsHtml.join());
+            },
+            
+            update_search: function()
+            {
+                var new_query = $('winky_search_text').val();
+                Winky.workspace.navigate("search=" + new_query, {trigger: true});
             }
         };
 
@@ -143,12 +211,12 @@
         });
 
         $(function () {
-            $('#winky_workspace_index').hide();
-            $('#winky_workspace_article').hide();
-            //$('edit_page')
-
-            var workspace = new Winky.Workspace();
+            
+            Winky.workspace = new Winky.Workspace();
             Backbone.history.start();
+            
+            $('winky_search_button').click = Winky.update_search();
+
 
 
         });
