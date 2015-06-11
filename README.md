@@ -17,3 +17,4 @@ Status
 | internal md linking | 100% |
 | Styling | 0% -- just needs some good CSS |
 | Search | 50% -- needs to be case insensitive and ignore white space variation |
+| Download of the modified content | 5% -- struggling to figure out Data URIs |
