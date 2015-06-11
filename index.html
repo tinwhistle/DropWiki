@@ -53,8 +53,22 @@
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
             <a href="javascript:Winky.cancel_edit()">Cancel</a>
         </li>
-        <li id="winky_delete_button"><a href="javascript:Winky.delete_page()">Delete</a></li>
-        <li id="winky_search_button"><a href="#search=">Search</a></li>
+        <li id="winky_delete_button">
+            <!-- todo: is this sloppy to invoke js from an achor tag? -->
+            <a href="javascript:Winky.delete_page()">Delete</a>
+        </li>
+        <li id="winky_search_link"><a href="#search=">Search</a></li>
+        <li id="winky_search_link">
+            <!-- todo: is this sloppy to invoke js from an achor tag? -->
+            <a href="javascript:Winky.download()">Download</a>
+            <!-- 
+                http://stackoverflow.com/questions/3916191/download-data-url-file
+                
+                https://developer.mozilla.org/en-US/docs/Web/HTTP/data_URIs
+                
+                
+                -->
+        </li>
     </ul>
     
     <div id="winky_page_viewer">
@@ -80,11 +94,14 @@
 
         var Winky =
         {
+
+//winky_pages_definition_start            
             pages:
             {
                 index: "hello there\n=========\nHere's some markup...\n\n[link to another page](winky:other-page1)\n\n[link to another page](winky:other-page2)",
                 'other-page1': "This is the other page 1!\n=================\nblah blah yadda yadda"
             },
+//winky_pages_definition_end
 
             view_page: function () {
                 var page_name = Backbone.history.getFragment();
@@ -130,6 +147,9 @@
                 if (Winky.pages[page_name]) {
                     $('#winky_page_editor_textbox').val(Winky.pages[page_name]);
                 }
+                else {
+                    $('#winky_page_editor_textbox').val('');
+                }
             },
 
             save_page: function () {
@@ -174,9 +194,9 @@
                 var results = [];
                 for (var content_page_name in Winky.pages)
                 {
-                    if (query.length == 1 || Winky.pages[content_page_name].includes(query))
+                    if (Winky.pages[content_page_name].includes(query))
                     {
-                        results.concat({
+                        results.push({
                             pn: content_page_name,
                             title: Winky.pages[content_page_name].substr(0, Winky.pages[content_page_name].indexOf('\n'))
                             });
@@ -187,15 +207,15 @@
                 var resultsHtml = [];
                 for (var i = 0; i < results.length; i++)
                 {
-                    resultsHtml.concat("<li><a href=\"#" + results[i].pn + "\">" + results[i].title + "</a></li>");
+                    resultsHtml.push("<li><a href=\"#" + results[i].pn + "\">" + results[i].title + "</a></li>");
                 }
                 
-                $('#winky_search_results').html(resultsHtml.join());
+                $('#winky_search_results').html(resultsHtml.join(''));
             },
             
             update_search: function()
             {
-                var new_query = $('winky_search_text').val();
+                var new_query = $('#winky_search_text').val();
                 Winky.workspace.navigate("search=" + new_query, {trigger: true});
             }
         };
@@ -215,7 +235,7 @@
             Winky.workspace = new Winky.Workspace();
             Backbone.history.start();
             
-            $('winky_search_button').click = Winky.update_search();
+            $('#winky_search_button').click(Winky.update_search);
 
 
 
