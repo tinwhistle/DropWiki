@@ -18,3 +18,4 @@ Status
 | Styling | 0% -- just needs some good CSS |
 | Search | 50% -- needs to be case insensitive and ignore white space variation |
 | Download of the modified content | 5% -- struggling to figure out Data URIs |
+| Embed JS dependencies so an Internate connection isn't required for usage. | 0% |
