@@ -58,9 +58,9 @@
             <a href="javascript:Winky.delete_page()">Delete</a>
         </li>
         <li id="winky_search_link"><a href="#search=">Search</a></li>
-        <li id="winky_search_link">
+        <li id="winky_download_link_menu_item">
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
-            <a href="javascript:Winky.download()">Download</a>
+            <a id="winky_download_link" href="" download="winky.html">Download</a>
             <!-- 
                 http://stackoverflow.com/questions/3916191/download-data-url-file
                 
@@ -95,13 +95,13 @@
         var Winky =
         {
 
-//winky_pages_definition_start            
+//winky_pages_definition_start_a3nw047cjtu0894n904vumjrtcn49mr
             pages:
             {
                 index: "hello there\n=========\nHere's some markup...\n\n[link to another page](winky:other-page1)\n\n[link to another page](winky:other-page2)",
                 'other-page1': "This is the other page 1!\n=================\nblah blah yadda yadda"
             },
-//winky_pages_definition_end
+//winky_pages_definition_end_a3nw047cjtu0894n904vumjrtcn49mr
 
             view_page: function () {
                 var page_name = Backbone.history.getFragment();
@@ -157,8 +157,30 @@
                 page_name = !page_name || page_name == "" ? "index" : page_name; // todo:DRY
 
                 Winky.pages[page_name] = $('#winky_page_editor_textbox').val();
+                
+                Winky.update_download_url();
 
                 Winky.view_page(page_name);
+            },
+
+            update_download_url: function()
+            {
+                // Could optimize this? Will be slow with big content?
+                
+                var currentAppSource = $('html').html();
+                var startMarker = 'winky_pages_definition_start_a3nw047cjtu0894n904vumjrtcn49mr';
+                var endMarker = 'winky_pages_definition_end_a3nw047cjtu0894n904vumjrtcn49mr';
+                
+                var startIndexOfContent = currentAppSource.indexOf(startMarker) + startMarker.length;
+                var endIndexOfContent = currentAppSource.indexOf(endMarker) - 3;
+                
+                var sourceBeforeContent = currentAppSource.substr(0, startIndexOfContent);
+                var sourceAfterContent = currentAppSource.substr(endIndexOfContent);
+                
+                var new_content = ['\n\npages: ', JSON.stringify(Winky.pages), ',\n\n'].join('');
+                
+                var href_val = 'data:,' + encodeURIComponent([sourceBeforeContent, new_content, sourceAfterContent].join(''));
+                $('#winky_download_link').attr('href', href_val);
             },
 
             cancel_edit: function() {
