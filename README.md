@@ -19,4 +19,4 @@ Status
 | Search | 50% -- needs to be case insensitive and ignore white space variation |
 | Download of the modified content | 100% |
 | Embed JS dependencies so an Internet connection isn't required for usage. | 0% |
-| License | Need to pick a good license for use of winky source code. Perhaps MIT? |
+| License | 100% |
