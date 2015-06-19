@@ -21,26 +21,43 @@ body
 }
 
 #winky_top_menu {
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100vw;
     margin: 0;
-    border-style: solid;
-    border-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
     list-style-type: none;
     background-color: rgb(238, 238, 238);
     background-image: linear-gradient(rgb(255, 255, 255), rgb(238, 238, 238) 50%, rgb(228, 228, 228));
     background-repeat: no-repeat;
-    height: 30px;
     vertical-align: middle;
 }
 
 #winky_top_menu li {
-    display: inline;
+    display: table-cell;
     border-right-style: solid;
     border-right-width: 1px;
     font-size: 14pt;
-    padding-left: 20px;
-    padding-right: 20px;
-    height: 30px;
+    width: 70pt;
+    height: 20pt;
+    vertical-align: middle;
+    text-align: center;
 }
+
+#winky_top_menu_spacer
+{
+  height: 20pt;
+}
+
+#winky_page_editor_textbox
+{
+  width: 90vw;
+  white-space: nowrap;
+  overflow: auto;
+}
+
     </style>
 </head>
 <body>
@@ -76,6 +93,8 @@ body
                 -->
         </li>
     </ul>
+
+    <div id="winky_top_menu_spacer"></div>
 
     <div id="winky_page_viewer">
     </div>
@@ -147,9 +166,12 @@ body
                 $('#winky_save_button').show();
                 $('#winky_cancel_button').show();
                 $('#winky_page_viewer').hide();
-                $('#winky_page_editor').show();
                 $('#winky_search_page').hide();
 
+
+                $('#winky_page_editor').show();
+                var viewport_height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+                $('#winky_page_editor_textbox').css('height', window.innerHeight - 2 * $('#winky_top_menu_spacer').height());
                 if (Winky.pages[page_name]) {
                     $('#winky_page_editor_textbox').val(Winky.pages[page_name]);
                 }
