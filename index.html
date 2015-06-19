@@ -56,6 +56,7 @@ body
   width: 90vw;
   white-space: nowrap;
   overflow: auto;
+  resize:both;
 }
 
     </style>
@@ -194,6 +195,10 @@ body
             update_download_url: function()
             {
                 // Could optimize this? Will be slow with big content?
+
+                // Clear this href so it isn't part of the download (waste of space) and also
+                // so it doesn't confuse the search for the start and end markers of the content.
+                $('#winky_download_link').attr('href', '');
 
                 var currentAppSource = $('html').html();
                 var startMarker = 'winky_pages_definition_start_a3nw047cjtu0894n904vumjrtcn49mr';
