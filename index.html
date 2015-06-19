@@ -21,21 +21,31 @@ body
 }
 
 #winky_top_menu {
-  position: fixed;
-  top:0;
-  left:0;
-  width: 100vw;
-    margin: 0;
+  position: relative;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
     border-bottom-style: solid;
     border-bottom-width: 1px;
-    list-style-type: none;
+    /*list-style-type: none;*/
     background-color: rgb(238, 238, 238);
     background-image: linear-gradient(rgb(255, 255, 255), rgb(238, 238, 238) 50%, rgb(228, 228, 228));
     background-repeat: no-repeat;
     vertical-align: middle;
 }
 
-#winky_top_menu li {
+#winky_top_menu_wrapper
+{
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background-color: rgb(238, 238, 238);
+  background-image: linear-gradient(rgb(255, 255, 255), rgb(238, 238, 238) 50%, rgb(228, 228, 228));
+  background-repeat: no-repeat;
+}
+
+#winky_top_menu div {
     display: table-cell;
     border-right-style: solid;
     border-right-width: 1px;
@@ -59,30 +69,39 @@ body
   resize:both;
 }
 
+#winky_page_viewer
+{
+  max-width: 650pt;
+  padding: 15pt;
+  margin-left: auto;
+  margin-right: auto;
+}
+
     </style>
 </head>
 <body>
 
-    <ul id="winky_top_menu">
-        <li><a href="#">Index</a></li>
-        <li id="winky_edit_button">
+<div id="winky_top_menu_wrapper">
+    <div id="winky_top_menu">
+        <div><a href="#">Index</a></div>
+        <div id="winky_edit_button">
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
             <a href="javascript:Winky.edit_page()">Edit</a>
-        </li>
-        <li id="winky_save_button">
+        </div>
+        <div id="winky_save_button">
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
             <a href="javascript:Winky.save_page()">Save</a>
-        </li>
-        <li id="winky_cancel_button">
+        </div>
+        <div id="winky_cancel_button">
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
             <a href="javascript:Winky.cancel_edit()">Cancel</a>
-        </li>
-        <li id="winky_delete_button">
+        </div>
+        <div id="winky_delete_button">
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
             <a href="javascript:Winky.delete_page()">Delete</a>
-        </li>
-        <li id="winky_search_link"><a href="#search=">Search</a></li>
-        <li id="winky_download_link_menu_item">
+        </div>
+        <div id="winky_search_link"><a href="#search=">Search</a></div>
+        <div id="winky_download_link_menu_item">
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
             <a id="winky_download_link" href="" download="winky.html">Download</a>
             <!--
@@ -92,8 +111,9 @@ body
 
 
                 -->
-        </li>
-    </ul>
+        </div>
+    </div>
+</div>
 
     <div id="winky_top_menu_spacer"></div>
 
