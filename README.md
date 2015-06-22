@@ -1,5 +1,5 @@
-winky
-=====
+DropWiki
+========
 
 This will be a wiki with a twist, inspired by MDwiki and Tiddly Wiki.
 
