@@ -3,7 +3,7 @@ DropWiki
 
 This will be a wiki with a twist, inspired by MDwiki and Tiddly Wiki.
 
-A winky will be a self editable document. You will be able to open it from your local file system into a browser, edit the content and save it back to the local file system.
+A DropWiki will be a self editable document. You will be able to open it from your local file system into a browser, edit the content and save it back to the local file system.
 
 The content will be editable in markdown format.
 
