@@ -1,7 +1,7 @@
 DropWiki
 ========
 
-This will be a wiki with a twist, inspired by MDwiki and Tiddly Wiki.
+This will be a wiki with a twist, inspired by [MDwiki](https://github.com/Dynalon/mdwiki) and [TiddlyWiki](https://github.com/Jermolene/TiddlyWiki5).
 
 A DropWiki will be a self editable document. You will be able to open it from your local file system into a browser, edit the content and save it back to the local file system.
 
