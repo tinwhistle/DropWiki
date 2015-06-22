@@ -14,17 +14,15 @@ html
 body
 {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
+  background-color: black;
   margin: 0;
   padding: 0;
-  width: 100vw;
+  max-width: 600pt;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #dropwiki_top_menu {
-  position: relative;
-  display: table;
-  margin-left: auto;
-  margin-right: auto;
     border-bottom-style: solid;
     border-bottom-width: 1px;
     /*list-style-type: none;*/
@@ -32,17 +30,8 @@ body
     background-image: linear-gradient(rgb(255, 255, 255), rgb(238, 238, 238) 50%, rgb(228, 228, 228));
     background-repeat: no-repeat;
     vertical-align: middle;
-}
-
-#dropwiki_top_menu_wrapper
-{
-  position: fixed;
-  width: 100vw;
-  top: 0;
-  left: 0;
-  background-color: rgb(238, 238, 238);
-  background-image: linear-gradient(rgb(255, 255, 255), rgb(238, 238, 238) 50%, rgb(228, 228, 228));
-  background-repeat: no-repeat;
+    padding: 0;
+    margin: 0;
 }
 
 #dropwiki_top_menu div {
@@ -56,14 +45,15 @@ body
     text-align: center;
 }
 
-#dropwiki_top_menu_spacer
+#dropwiki_page_editor
 {
-  height: 20pt;
+  margin: 0;
+  background-color: white;
 }
 
 #dropwiki_page_editor_textbox
 {
-  width: 90vw;
+  margin: 0;
   white-space: nowrap;
   overflow: auto;
   resize:both;
@@ -71,17 +61,20 @@ body
 
 #dropwiki_page_viewer
 {
-  max-width: 650pt;
-  padding: 15pt;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0;
+  padding: 14pt;
+  background-color: white;
+}
+
+#dropwiki_search_page
+{
+background-color: white;
 }
 
     </style>
 </head>
 <body>
 
-<div id="dropwiki_top_menu_wrapper">
     <div id="dropwiki_top_menu">
         <div><a href="#">Index</a></div>
         <div id="dropwiki_edit_button">
@@ -113,9 +106,6 @@ body
                 -->
         </div>
     </div>
-</div>
-
-    <div id="dropwiki_top_menu_spacer"></div>
 
     <div id="dropwiki_page_viewer">
     </div>
@@ -167,6 +157,7 @@ body
                 // todo:databind the visibility so this show hide code doesn't have to be repeated.
                 $('#dropwiki_edit_button').show();
                 $('#dropwiki_save_button').hide();
+                $('#dropwiki_delete_button').show();
                 $('#dropwiki_cancel_button').hide();
                 $('#dropwiki_page_viewer').show();
                 $('#dropwiki_page_editor').hide();
@@ -185,6 +176,7 @@ body
 
                 $('#dropwiki_edit_button').hide();
                 $('#dropwiki_save_button').show();
+                $('#dropwiki_delete_button').show();
                 $('#dropwiki_cancel_button').show();
                 $('#dropwiki_page_viewer').hide();
                 $('#dropwiki_search_page').hide();
@@ -192,7 +184,9 @@ body
 
                 $('#dropwiki_page_editor').show();
                 var viewport_height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-                $('#dropwiki_page_editor_textbox').css('height', window.innerHeight - 2 * $('#dropwiki_top_menu_spacer').height());
+                $('#dropwiki_page_editor_textbox').css('height', window.innerHeight - 2 * $('#dropwiki_top_menu').height());
+                $('#dropwiki_page_editor_textbox').css('width', $('#dropwiki_top_menu').width() - 20);
+
                 if (DropWiki.pages[page_name]) {
                     $('#dropwiki_page_editor_textbox').val(DropWiki.pages[page_name]);
                 }
@@ -256,6 +250,8 @@ body
             {
                 $('#dropwiki_edit_button').hide();
                 $('#dropwiki_save_button').hide();
+                $('#dropwiki_delete_button').hide();
+
                 $('#dropwiki_cancel_button').hide();
                 $('#dropwiki_page_viewer').hide();
                 $('#dropwiki_page_editor').hide();
