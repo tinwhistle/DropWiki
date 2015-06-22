@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>;-)</title>
+    <title>DropWiki</title>
     <style>
 
 html
@@ -20,7 +20,7 @@ body
   width: 100vw;
 }
 
-#winky_top_menu {
+#dropwiki_top_menu {
   position: relative;
   display: table;
   margin-left: auto;
@@ -34,7 +34,7 @@ body
     vertical-align: middle;
 }
 
-#winky_top_menu_wrapper
+#dropwiki_top_menu_wrapper
 {
   position: fixed;
   width: 100vw;
@@ -45,7 +45,7 @@ body
   background-repeat: no-repeat;
 }
 
-#winky_top_menu div {
+#dropwiki_top_menu div {
     display: table-cell;
     border-right-style: solid;
     border-right-width: 1px;
@@ -56,12 +56,12 @@ body
     text-align: center;
 }
 
-#winky_top_menu_spacer
+#dropwiki_top_menu_spacer
 {
   height: 20pt;
 }
 
-#winky_page_editor_textbox
+#dropwiki_page_editor_textbox
 {
   width: 90vw;
   white-space: nowrap;
@@ -69,7 +69,7 @@ body
   resize:both;
 }
 
-#winky_page_viewer
+#dropwiki_page_viewer
 {
   max-width: 650pt;
   padding: 15pt;
@@ -81,29 +81,29 @@ body
 </head>
 <body>
 
-<div id="winky_top_menu_wrapper">
-    <div id="winky_top_menu">
+<div id="dropwiki_top_menu_wrapper">
+    <div id="dropwiki_top_menu">
         <div><a href="#">Index</a></div>
-        <div id="winky_edit_button">
+        <div id="dropwiki_edit_button">
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
-            <a href="javascript:Winky.edit_page()">Edit</a>
+            <a href="javascript:DropWiki.edit_page()">Edit</a>
         </div>
-        <div id="winky_save_button">
+        <div id="dropwiki_save_button">
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
-            <a href="javascript:Winky.save_page()">Save</a>
+            <a href="javascript:DropWiki.save_page()">Save</a>
         </div>
-        <div id="winky_cancel_button">
+        <div id="dropwiki_cancel_button">
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
-            <a href="javascript:Winky.cancel_edit()">Cancel</a>
+            <a href="javascript:DropWiki.cancel_edit()">Cancel</a>
         </div>
-        <div id="winky_delete_button">
+        <div id="dropwiki_delete_button">
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
-            <a href="javascript:Winky.delete_page()">Delete</a>
+            <a href="javascript:DropWiki.delete_page()">Delete</a>
         </div>
-        <div id="winky_search_link"><a href="#search=">Search</a></div>
-        <div id="winky_download_link_menu_item">
+        <div id="dropwiki_search_link"><a href="#search=">Search</a></div>
+        <div id="dropwiki_download_link_menu_item">
             <!-- todo: is this sloppy to invoke js from an achor tag? -->
-            <a id="winky_download_link" href="" download="winky.html">Download</a>
+            <a id="dropwiki_download_link" href="" download="dropwiki.html">Download</a>
             <!--
                 http://stackoverflow.com/questions/3916191/download-data-url-file
 
@@ -115,19 +115,19 @@ body
     </div>
 </div>
 
-    <div id="winky_top_menu_spacer"></div>
+    <div id="dropwiki_top_menu_spacer"></div>
 
-    <div id="winky_page_viewer">
+    <div id="dropwiki_page_viewer">
     </div>
 
-    <div id="winky_page_editor">
-        <textarea name="winky_page_editor_name" id="winky_page_editor_textbox"></textarea>
+    <div id="dropwiki_page_editor">
+        <textarea name="dropwiki_page_editor_name" id="dropwiki_page_editor_textbox"></textarea>
     </div>
 
-    <div id="winky_search_page">
-        <textarea id="winky_search_text"></textarea>
-        <button id="winky_search_button">Find</button>
-        <ul id="winky_search_results">
+    <div id="dropwiki_search_page">
+        <textarea id="dropwiki_search_text"></textarea>
+        <button id="dropwiki_search_button">Find</button>
+        <ul id="dropwiki_search_results">
         </ul>
     </div>
 
@@ -138,16 +138,16 @@ body
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
     <script>
 
-        var Winky =
+        var DropWiki =
         {
 
-//winky_pages_definition_start_a3nw047cjtu0894n904vumjrtcn49mr
+//dropwiki_pages_definition_start_a3nw047cjtu0894n904vumjrtcn49mr
             pages:
             {
-                index: "hello there\n=========\nHere's some markup...\n\n[link to another page](winky:other-page1)\n\n[link to another page](winky:other-page2)",
+                index: "hello there\n=========\nHere's some markup...\n\n[link to another page](dropwiki:other-page1)\n\n[link to another page](dropwiki:other-page2)",
                 'other-page1': "This is the other page 1!\n=================\nblah blah yadda yadda"
             },
-//winky_pages_definition_end_a3nw047cjtu0894n904vumjrtcn49mr
+//dropwiki_pages_definition_end_a3nw047cjtu0894n904vumjrtcn49mr
 
             view_page: function () {
                 var page_name = Backbone.history.getFragment();
@@ -155,27 +155,27 @@ body
 
                 if (page_name.startsWith('search='))
                 {
-                    Winky.view_search_page();
+                    DropWiki.view_search_page();
                     return;
                 }
 
-                if (!Winky.pages[page_name]) {
-                    Winky.edit_page();
+                if (!DropWiki.pages[page_name]) {
+                    DropWiki.edit_page();
                     return;
                 }
 
                 // todo:databind the visibility so this show hide code doesn't have to be repeated.
-                $('#winky_edit_button').show();
-                $('#winky_save_button').hide();
-                $('#winky_cancel_button').hide();
-                $('#winky_page_viewer').show();
-                $('#winky_page_editor').hide();
-                $('#winky_search_page').hide();
+                $('#dropwiki_edit_button').show();
+                $('#dropwiki_save_button').hide();
+                $('#dropwiki_cancel_button').hide();
+                $('#dropwiki_page_viewer').show();
+                $('#dropwiki_page_editor').hide();
+                $('#dropwiki_search_page').hide();
 
-                $('#winky_page_viewer').html(marked(Winky.pages[page_name]));
-                $('#winky_page_viewer a[href^="winky:"]').each(function () {
+                $('#dropwiki_page_viewer').html(marked(DropWiki.pages[page_name]));
+                $('#dropwiki_page_viewer a[href^="dropwiki:"]').each(function () {
                     var el = $(this);
-                    el.attr('href', '#' + el.attr('href').substr('winky:'.length));
+                    el.attr('href', '#' + el.attr('href').substr('dropwiki:'.length));
                 })
             },
 
@@ -183,21 +183,21 @@ body
                 var page_name = Backbone.history.getFragment();
                 page_name = !page_name || page_name == "" ? "index" : page_name; // todo:DRY
 
-                $('#winky_edit_button').hide();
-                $('#winky_save_button').show();
-                $('#winky_cancel_button').show();
-                $('#winky_page_viewer').hide();
-                $('#winky_search_page').hide();
+                $('#dropwiki_edit_button').hide();
+                $('#dropwiki_save_button').show();
+                $('#dropwiki_cancel_button').show();
+                $('#dropwiki_page_viewer').hide();
+                $('#dropwiki_search_page').hide();
 
 
-                $('#winky_page_editor').show();
+                $('#dropwiki_page_editor').show();
                 var viewport_height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-                $('#winky_page_editor_textbox').css('height', window.innerHeight - 2 * $('#winky_top_menu_spacer').height());
-                if (Winky.pages[page_name]) {
-                    $('#winky_page_editor_textbox').val(Winky.pages[page_name]);
+                $('#dropwiki_page_editor_textbox').css('height', window.innerHeight - 2 * $('#dropwiki_top_menu_spacer').height());
+                if (DropWiki.pages[page_name]) {
+                    $('#dropwiki_page_editor_textbox').val(DropWiki.pages[page_name]);
                 }
                 else {
-                    $('#winky_page_editor_textbox').val('');
+                    $('#dropwiki_page_editor_textbox').val('');
                 }
             },
 
@@ -205,11 +205,11 @@ body
                 var page_name = Backbone.history.getFragment();
                 page_name = !page_name || page_name == "" ? "index" : page_name; // todo:DRY
 
-                Winky.pages[page_name] = $('#winky_page_editor_textbox').val();
+                DropWiki.pages[page_name] = $('#dropwiki_page_editor_textbox').val();
 
-                Winky.update_download_url();
+                DropWiki.update_download_url();
 
-                Winky.view_page(page_name);
+                DropWiki.view_page(page_name);
             },
 
             update_download_url: function()
@@ -218,11 +218,11 @@ body
 
                 // Clear this href so it isn't part of the download (waste of space) and also
                 // so it doesn't confuse the search for the start and end markers of the content.
-                $('#winky_download_link').attr('href', '');
+                $('#dropwiki_download_link').attr('href', '');
 
                 var currentAppSource = $('html').html();
-                var startMarker = 'winky_pages_definition_start_a3nw047cjtu0894n904vumjrtcn49mr';
-                var endMarker = 'winky_pages_definition_end_a3nw047cjtu0894n904vumjrtcn49mr';
+                var startMarker = 'dropwiki_pages_definition_start_a3nw047cjtu0894n904vumjrtcn49mr';
+                var endMarker = 'dropwiki_pages_definition_end_a3nw047cjtu0894n904vumjrtcn49mr';
 
                 var startIndexOfContent = currentAppSource.indexOf(startMarker) + startMarker.length;
                 var endIndexOfContent = currentAppSource.indexOf(endMarker) - 3;
@@ -230,50 +230,50 @@ body
                 var sourceBeforeContent = currentAppSource.substr(0, startIndexOfContent);
                 var sourceAfterContent = currentAppSource.substr(endIndexOfContent);
 
-                var new_content = ['\n\npages: ', JSON.stringify(Winky.pages), ',\n\n'].join('');
+                var new_content = ['\n\npages: ', JSON.stringify(DropWiki.pages), ',\n\n'].join('');
 
                 var href_val = 'data:,' + encodeURIComponent([sourceBeforeContent, new_content, sourceAfterContent].join(''));
-                $('#winky_download_link').attr('href', href_val);
+                $('#dropwiki_download_link').attr('href', href_val);
             },
 
             cancel_edit: function() {
                 var page_name = Backbone.history.getFragment();
                 page_name = !page_name || page_name == "" ? "index" : page_name; // todo:DRY
 
-                Winky.view_page(page_name);
+                DropWiki.view_page(page_name);
             },
 
             delete_page: function() {
                 var page_name = Backbone.history.getFragment();
                 page_name = !page_name || page_name == "" ? "index" : page_name; // todo:DRY
 
-                delete Winky.pages[page_name];
+                delete DropWiki.pages[page_name];
 
-                Winky.view_page("");
+                DropWiki.view_page("");
             },
 
             view_search_page: function()
             {
-                $('#winky_edit_button').hide();
-                $('#winky_save_button').hide();
-                $('#winky_cancel_button').hide();
-                $('#winky_page_viewer').hide();
-                $('#winky_page_editor').hide();
-                $('#winky_search_page').show();
+                $('#dropwiki_edit_button').hide();
+                $('#dropwiki_save_button').hide();
+                $('#dropwiki_cancel_button').hide();
+                $('#dropwiki_page_viewer').hide();
+                $('#dropwiki_page_editor').hide();
+                $('#dropwiki_search_page').show();
 
                 var page_name = Backbone.history.getFragment();
                 var query = page_name.substr('search='.length);
 
-                $('winky_search_text').val(query);
+                $('dropwiki_search_text').val(query);
 
                 var results = [];
-                for (var content_page_name in Winky.pages)
+                for (var content_page_name in DropWiki.pages)
                 {
-                    if (Winky.pages[content_page_name].includes(query))
+                    if (DropWiki.pages[content_page_name].includes(query))
                     {
                         results.push({
                             pn: content_page_name,
-                            title: Winky.pages[content_page_name].substr(0, Winky.pages[content_page_name].indexOf('\n'))
+                            title: DropWiki.pages[content_page_name].substr(0, DropWiki.pages[content_page_name].indexOf('\n'))
                             });
                     }
                 }
@@ -285,32 +285,32 @@ body
                     resultsHtml.push("<li><a href=\"#" + results[i].pn + "\">" + results[i].title + "</a></li>");
                 }
 
-                $('#winky_search_results').html(resultsHtml.join(''));
+                $('#dropwiki_search_results').html(resultsHtml.join(''));
             },
 
             update_search: function()
             {
-                var new_query = $('#winky_search_text').val();
-                Winky.workspace.navigate("search=" + new_query, {trigger: true});
+                var new_query = $('#dropwiki_search_text').val();
+                DropWiki.workspace.navigate("search=" + new_query, {trigger: true});
             }
         };
 
-        Winky.Workspace = Backbone.Router.extend({
+        DropWiki.Workspace = Backbone.Router.extend({
 
             routes: {
                 "": "view_page",
                 ":query": "view_page"
             },
 
-            view_page: Winky.view_page
+            view_page: DropWiki.view_page
         });
 
         $(function () {
 
-            Winky.workspace = new Winky.Workspace();
+            DropWiki.workspace = new DropWiki.Workspace();
             Backbone.history.start();
 
-            $('#winky_search_button').click(Winky.update_search);
+            $('#dropwiki_search_button').click(DropWiki.update_search);
 
 
 
