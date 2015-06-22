@@ -14,6 +14,8 @@ Status
 | ------- | -------- |
 | md editing | 100% |
 | md rendering | 80% -- still need to configure to use Github Flavored Markdown. Still need to use Highlight.js for syntax highlighting |
+| Set title according to first line of index page | 0% |
+| Code cleanup | 0% |
 | internal md linking | 100% |
 | Styling | 0% -- just needs some good CSS |
 | Search | 50% -- needs to be case insensitive and ignore white space variation |
